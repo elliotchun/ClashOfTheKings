@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const FindUser = require('../MongoFindUser');
+const FindUser = require('../Helpers/MongoFindUser');
 
 module.exports = {
     data: new SlashCommandBuilder()
