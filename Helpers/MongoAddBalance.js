@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const Users = require('./models/Users');
+const Users = require('../models/Users');
 const FindUser = require('./MongoFindUser');
 
 const url = "mongodb+srv://dbUser:B2tmKqGEe8EWTvw@cluster0.h2pkw.mongodb.net/dbUser?retryWrites=true&w=majority";
