@@ -9,7 +9,7 @@ const client = new MongoClient(url);
 const dbName = "CotK";
 
 
-var addBalance = async function (id, amount) {
+exports.addBalance = async function (id, amount) {
     try {
         await client.connect();
         console.log("Connected correctly to server");

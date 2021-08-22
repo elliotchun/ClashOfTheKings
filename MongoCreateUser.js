@@ -8,7 +8,7 @@ const client = new MongoClient(url);
 const dbName = "CotK";
 
 
-var createUser = async function (id) {
+exports.createUser = async function (id) {
     try {
         await client.connect();
         console.log("Connected correctly to server");
@@ -38,5 +38,3 @@ var createUser = async function (id) {
         await client.close();
     }
 }
-
-module.exports.createUser = createUser;

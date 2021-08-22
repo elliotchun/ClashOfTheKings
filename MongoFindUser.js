@@ -8,7 +8,7 @@ const client = new MongoClient(url);
 const dbName = "CotK";
 
 
-var findUser = async function (id) {
+exports.findUser = async function (id) {
     try {
         await client.connect();
         console.log("Connected correctly to server");
@@ -39,5 +39,3 @@ var findUser = async function (id) {
         await client.close();
     }
 }
-
-module.exports.findUser = findUser;
