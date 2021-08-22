@@ -1,9 +1,7 @@
 module.exports = {
     name: "",
     info: "",
-    type: "",
-    rarity: "",
-    tag: "",
+    duration: "",
     function: function () { },
     brain: {},
 }

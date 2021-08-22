@@ -34,6 +34,4 @@ exports.addBalance = async function (id, amount) {
         await client.close();
     }
 }
-
-module.exports.addBalance = addBalance;
 //addBalance().catch(console.dir);

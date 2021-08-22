@@ -1,4 +1,4 @@
 module.exports = {
-    cName: "",
+    name: "",
     cost: 0,
 };

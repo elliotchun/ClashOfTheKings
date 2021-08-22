@@ -1,7 +1,8 @@
 const fs = require('fs');
 const { Client, Intents, Collection } = require('discord.js');
 const { token } = require('./config.json');
-const { Console } = require('console');
+const Shop = require('./Shop')
+
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.commands = new Collection();
 
@@ -15,7 +16,8 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-    console.log('Bot online and ready!')
+    console.log('Bot online and ready!');
+    Shop.DoShop();
 });
 
 client.on('interactionCreate', async interaction => {
