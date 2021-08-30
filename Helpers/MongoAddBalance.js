@@ -1,19 +1,17 @@
 const Users = require('../models/Users');
 const FindUser = require('./MongoFindUser');
-const { db } = require('../index');
+const DatabaseInfo = require('../MongoInfo');
 
 exports.addBalance = async function (id, amount) {
     try {
-        // set collection to users
+        await DatabaseInfo.mongoClient.connect();
+        const db = DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
+
         const col = db.collection("UserBalance");
         
-        const p = await col.updateOne({ user_id: id },
+        await col.updateOne({ user_id: id },
             { $set: { balance: amount } });
-        // Find one document
-        const myDoc = await col.findOne();
-        // Print to the console
-        console.log(myDoc);
-
+        console.log(`[AddBalance]: Added ${amount} gold to ${id}'s balance`);
     }
     catch (err) {
         console.log(err.stack);

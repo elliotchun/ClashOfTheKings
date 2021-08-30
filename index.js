@@ -2,20 +2,9 @@ const fs = require('fs');
 const { Client, Intents, Collection } = require('discord.js');
 const { token } = require('./config.json');
 const Shop = require('./Shop');
-const { MongoClient } = require("mongodb");
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.commands = new Collection();
-
-const mongoDB = async function () {
-    const url = "mongodb+srv://dbUser:B2tmKqGEe8EWTvw@cluster0.h2pkw.mongodb.net/dbUser?retryWrites=true&w=majority";
-    const mongoClient = new MongoClient(url);
-    const dbName = "CotK";
-    await mongoClient.connect();
-    console.log("Connected to MongoDB");
-    return mongoClient.db(dbName);
-}
-const db = mongoDB();
 
 const commandFiles = fs.readdirSync('./Commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -24,15 +13,10 @@ for (const file of commandFiles) {
     // with the key as the command name and the value as the exported module
     client.commands.set(command.data.name, command);
 }
+
 client.once('ready', () => {
-    try {
-        Shop.DoShop();
-        console.log('Bot online and ready!');
-    }
-    catch (err) {
-        console.log(err.stack);
-    }
-    
+    Shop.DoShop('Base');
+    console.log('Bot online and ready!');
 });
 
 
@@ -49,7 +33,3 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.login(token);
-
-module.exports = {
-    db
-}
