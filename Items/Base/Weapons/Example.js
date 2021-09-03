@@ -1,5 +1,5 @@
 const Weapon = require('../../Weapon');
-class Example extends Weapon {
+class ExampleWeapon extends Weapon {
     constructor() {
         super();
         this.name = 'Example Weapon';
@@ -11,4 +11,4 @@ class Example extends Weapon {
     }
 }
 
-module.exports = new Example;
+module.exports = new ExampleWeapon;

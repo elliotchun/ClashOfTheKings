@@ -18,4 +18,7 @@ exports.createUser = async function (id) {
     } catch (err) {
         console.log(err.stack);
     }
+    finally {
+        await DatabaseInfo.mongoClient.close();
+    }
 }

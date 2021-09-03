@@ -22,7 +22,7 @@ module.exports = {
         const balance = dbUser.balance;
         const newAmount = amount + balance;
         await AddBalance.addBalance(user.id, balance + amount);
-        
+        console.log(`[AddBalance]: Added ${amount} gold to ${user}'s balance`);
         return interaction.reply({
             content: `Added ${amount} to ${user}\'s balance.\nThey now have ${newAmount} gold`,
             ephemeral: true,

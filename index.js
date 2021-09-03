@@ -1,9 +1,9 @@
 const fs = require('fs');
 const { Client, Intents, Collection } = require('discord.js');
-const { token } = require('./config.json');
+const { token, shopChannel } = require('./config.json');
 const Shop = require('./Shop');
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 client.commands = new Collection();
 
 const commandFiles = fs.readdirSync('./Commands').filter(file => file.endsWith('.js'));
@@ -15,7 +15,16 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-    Shop.DoShop('Base');
+    Shop.SetupShop('Base');
+    
+    setInterval(function () {
+        let currentTime = new Date();
+        if (currentTime.getMinutes() % 1 === 0) {
+            console.log('Shop Reset!');
+            Shop.ResetShop(client, shopChannel);
+        }
+    }, 60000);
+
     console.log('Bot online and ready!');
 });
 

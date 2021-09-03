@@ -5,7 +5,7 @@ let artifacts = [];
 let utilities = [];
 let shopItems = [];
 
-exports.DoShop = function (...args) {
+exports.SetupShop = function (...args) {
 
     for (let i = 0; i < args.length; args++) {
         const set = args[i];
@@ -18,7 +18,6 @@ exports.DoShop = function (...args) {
                 weapons.push(weapon);
             }
         }
-        console.log(weapons);
         for (const file of artifactItems) {
             const artifact = require(`./Items/${set}/Artifacts/${file}`);
             if (artifact.rarity === 'Common') {
@@ -32,19 +31,20 @@ exports.DoShop = function (...args) {
             }
         }
     }
-    setInterval(function () {
-        let currentTime = new Date();
-        if (currentTime.getMinutes() % 1 === 0) {
-            console.log('Shop Reset!');
-            ResetShop();
-        }
-    }, 60000);
 }
 
-ResetShop = function () {
-    let wIndex = Math.random(weapons.length);
-    let aIndex = Math.random(artifacts.length);
-    let uIndex = Math.random(utilities.length);
-    shopItems.push(weapons[wIndex], weapons[aIndex, weapons[uIndex]]);
-    shopItems.splice[0, 3];
+exports.ResetShop = function (client, channel) {
+    shopItems = [];
+    let wIndex = Math.floor(Math.random(weapons.length - 1));
+    let aIndex = Math.floor(Math.random(artifacts.length - 1));
+    let uIndex = Math.floor(Math.random(utilities.length - 1));
+    shopItems.push(weapons[wIndex], artifacts[aIndex], utilities[uIndex]);
+    console.log(shopItems);
+    
+    const shopChannel = client.channels.cache.get(channel);
+    shopChannel.send('Shop Reset');
+}
+
+exports.BuyShop = function (id, num) {
+    
 }
