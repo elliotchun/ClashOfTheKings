@@ -42,7 +42,9 @@ exports.ResetShop = function (client, channel) {
     console.log(shopItems);
     
     const shopChannel = client.channels.cache.get(channel);
-    shopChannel.send('Shop Reset');
+    let shopString = `New items are in the shop:\n${shopItems[0].name} ${shopItems[1].name} ${shopItems[2].name}`;
+
+    shopChannel.send(shopString);
 }
 
 exports.BuyShop = function (id, num) {

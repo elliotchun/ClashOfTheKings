@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Users = require('../models/Users');
 const AddBalance = require('../Helpers/MongoAddBalance');
-const FindUser = require('../Helpers/MongoFindUser');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,10 +17,7 @@ module.exports = {
         }
         const user = interaction.options.getUser('target');
         const amount = interaction.options.getInteger('int');
-        const dbUser = await FindUser.findUser(user.id);
-        const balance = dbUser.balance;
-        const newAmount = amount + balance;
-        await AddBalance.addBalance(user.id, balance + amount);
+        const newAmount = await AddBalance.addBalance(user.id, amount);
         console.log(`[AddBalance]: Added ${amount} gold to ${user}'s balance`);
         return interaction.reply({
             content: `Added ${amount} to ${user}\'s balance.\nThey now have ${newAmount} gold`,

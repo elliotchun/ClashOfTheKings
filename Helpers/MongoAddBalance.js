@@ -1,7 +1,6 @@
 const Users = require('../models/Users');
 const FindUser = require('./MongoFindUser');
 const DatabaseInfo = require('../MongoInfo');
-const { formatEmoji } = require('@discordjs/builders');
 
 exports.addBalance = async function (id, amount) {
     try {
@@ -9,9 +8,13 @@ exports.addBalance = async function (id, amount) {
         const db = DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
 
         const col = db.collection("UserBalance");
-        
+        const dbUser = await FindUser.findUser(id);
+        const balance = dbUser.balance;
+        const newAmount = amount + balance;
+
         await col.updateOne({ user_id: id },
-            { $set: { balance: amount } });
+            { $set: { balance: newAmount } });
+        return newAmount;
     }
     catch (err) {
         console.log(err.stack);
