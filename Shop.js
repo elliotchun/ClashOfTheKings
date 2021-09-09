@@ -1,4 +1,5 @@
 const fs = require('fs');
+const SubtractBalance = require('./Helpers/MongoSubtractBalance');
 
 let weapons = [];
 let artifacts = [];
@@ -42,11 +43,32 @@ exports.ResetShop = function (client, channel) {
     console.log(shopItems);
     
     const shopChannel = client.channels.cache.get(channel);
-    let shopString = `New items are in the shop:\n${shopItems[0].name} ${shopItems[1].name} ${shopItems[2].name}`;
+    let shopString = `New items are in the shop:\n${shopItems[0].name}, ${shopItems[1].name}, ${shopItems[2].name}`;
 
     shopChannel.send(shopString);
 }
 
 exports.BuyShop = function (id, num) {
+    const cost = getCostFromRarity(shopItems[num].rarity);
+    const newAmount = await SubtractBalance.subtractBalance(id, cost, false);
+    if (newAmount < 0) { // too expensive
+        console.log(`[Shop]: Tried to remove ${amount} gold from ${id}'s balance; not enough funds`);
+    }
+    else { // enough balance
+        console.log(`[Shop]: Removed ${amount} gold to ${id}'s balance`);
+    }
     
+    
+}
+
+function getCostFromRarity(rarity) {
+    switch (rarity) {
+        case 'legendary':
+            return 100;
+        case 'rare':
+            return 30;
+        case 'common':
+        default:
+            return 10;
+    }
 }
