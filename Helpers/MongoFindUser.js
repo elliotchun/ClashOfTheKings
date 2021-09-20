@@ -8,7 +8,7 @@ exports.findUser = async function (id) {
         await DatabaseInfo.mongoClient.connect();
         const db = DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
         // set collection to users
-        const col = db.collection("UserBalance");
+        const col = db.collection('UserInventory');
 
         // Query for document, wait for promise so we can read it back
         const myDoc = await col.findOne({user_id: id});

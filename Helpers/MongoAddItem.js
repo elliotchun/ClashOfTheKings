@@ -1,20 +1,21 @@
-const Users = require('../models/Users');
+const UserItems = require('../models/UserItems');
 const FindUser = require('./MongoFindUser');
 const DatabaseInfo = require('../MongoInfo');
 
-exports.addBalance = async function (id, amount) {
+exports.addItem = async function (id, item, amount = 1) {
     try {
         await DatabaseInfo.mongoClient.connect();
         const db = DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
 
         const col = db.collection('UserInventory');
-        const dbUser = await FindUser.findUser(id);
-        const balance = await dbUser.balance;
-        const newAmount = amount + balance;
+        //const dbUser = await FindUser.findUser(id, 'UserItems');
+        //const itemCount = dbUser.items;
+        let aUserItem = UserItems;
+        aUserItem.user_id = id;
+        aUserItem.item_id = item;
+        aUserItem.amount = amount;
 
-        await col.updateOne({ user_id: id },
-            { $set: { balance: newAmount } });
-        return newAmount;
+        await col.insertOne(aUserItem);
     }
     catch (err) {
         console.log(err.stack);

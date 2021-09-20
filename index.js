@@ -16,7 +16,7 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     Shop.SetupShop('Base');
-    
+
     setInterval(function () {
         let currentTime = new Date();
         if (currentTime.getMinutes() % 1 === 0) {
