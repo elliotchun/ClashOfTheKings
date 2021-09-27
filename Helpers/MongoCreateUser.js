@@ -6,7 +6,7 @@ const ExampleUtility = require('../Items/Base/Utilities/ExampleUtility');
 
 exports.createUser = async function (id) {
     try {
-        await DatabaseInfo.mongoClient.connect();
+        //await DatabaseInfo.mongoClient.connect();
         const db = DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
         const col = db.collection('UserInventory');
         
@@ -19,10 +19,8 @@ exports.createUser = async function (id) {
         userDocument.utilities = [ExampleUtility];
         // Insert a single document, wait for promise so we can read it back
         const p = await col.insertOne(userDocument);
-    } catch (err) {
-        console.log(err.stack);
     }
-    finally {
-        await DatabaseInfo.mongoClient.close();
+    catch (err) {
+        console.log(err.stack);
     }
 }

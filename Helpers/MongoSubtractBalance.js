@@ -4,7 +4,7 @@ const DatabaseInfo = require('../MongoInfo');
 
 exports.subtractBalance = async function (id, amount, force = false) {
     try {
-        await DatabaseInfo.mongoClient.connect();
+        //await DatabaseInfo.mongoClient.connect();
         const db = DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
 
         const col = db.collection('UserInventory');
@@ -29,9 +29,6 @@ exports.subtractBalance = async function (id, amount, force = false) {
     }
     catch (err) {
         console.log(err.stack);
-    }
-    finally {
-        await DatabaseInfo.mongoClient.close();
     }
 }
 //addBalance().catch(console.dir);

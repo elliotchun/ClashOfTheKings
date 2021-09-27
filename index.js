@@ -2,6 +2,7 @@ const fs = require('fs');
 const { Client, Intents, Collection } = require('discord.js');
 const { token, shopChannel } = require('./config.json');
 const Shop = require('./Shop');
+const DatabaseInfo = require('./MongoInfo');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 client.commands = new Collection();
@@ -16,7 +17,7 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     Shop.SetupShop('Base');
-
+    DatabaseInfo.init();
     setInterval(function () {
         let currentTime = new Date();
         if (currentTime.getMinutes() % 1 === 0) {

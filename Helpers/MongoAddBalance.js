@@ -4,8 +4,8 @@ const DatabaseInfo = require('../MongoInfo');
 
 exports.addBalance = async function (id, amount) {
     try {
-        await DatabaseInfo.mongoClient.connect();
-        const db = DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
+        //await DatabaseInfo.mongoClient.connect();
+        const db = await DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
 
         const col = db.collection('UserInventory');
         const dbUser = await FindUser.findUser(id);
@@ -18,8 +18,5 @@ exports.addBalance = async function (id, amount) {
     }
     catch (err) {
         console.log(err.stack);
-    }
-    finally {
-        await DatabaseInfo.mongoClient.close();
     }
 }
