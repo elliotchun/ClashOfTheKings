@@ -6,7 +6,7 @@ const dbName = "CotK";
 
 const init = async function () {
     await client.connect();
-    const db = await client.db(dbName);
+    const db = await client.db(dbName); // TODO reuse this for all db references
     // set collection to users
     const col = db.collection("UserInformation");
 }

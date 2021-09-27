@@ -7,11 +7,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('buy')
         .setDescription('Purchase an item from the shop')
-        .addStringOption(option => option.setName('string').setDescription('The item to purchase').setRequired(true)),
+        .addStringOption(option => option.setName('item').setDescription('The item to purchase').setRequired(true)),
     
     async execute(interaction) {
         const userid = interaction.user.id;
-        const itemid = interaction.options.getString('string');
+        const itemid = interaction.options.getString('item');
         const itemindex = Helpers.searchStringInArray(itemid, Shop.shopItems);
         const item = Shop.BuyShop(userid, itemindex);
         if (item) {
