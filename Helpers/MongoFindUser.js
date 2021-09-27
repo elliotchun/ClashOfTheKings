@@ -5,8 +5,8 @@ const DatabaseInfo = require('../MongoInfo');
 
 exports.findUser = async function (id) {
     try {
-        await DatabaseInfo.mongoClient.connect();
-        const db = DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
+        //await DatabaseInfo.mongoClient.connect();
+        const db = await DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
         // set collection to users
         const col = db.collection("UserBalance");
 
@@ -27,10 +27,8 @@ exports.findUser = async function (id) {
             return newDoc;
         }
 
-    } catch (err) {
-        console.log(err.stack);
     }
-    finally {
-        await DatabaseInfo.mongoClient.close();
+    catch (err) {
+        console.log(err.stack);
     }
 }

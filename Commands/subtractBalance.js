@@ -4,7 +4,7 @@ const SubtractBalance = require('../Helpers/MongoSubtractBalance');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('subtractalance')
+        .setName('subtractbalance')
         .setDescription('Adds gold to the balance of the selected user.')
         .addUserOption(option => option.setName('target').setDescription('The user to give gold to').setRequired(true))
         .addIntegerOption(option => option.setName('int').setDescription('The amount of gold to give').setRequired(true)),

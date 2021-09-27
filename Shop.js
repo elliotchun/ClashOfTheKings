@@ -48,7 +48,7 @@ exports.ResetShop = function (client, channel) {
     shopChannel.send(shopString);
 }
 
-exports.BuyShop = function (id, num) {
+exports.BuyShop = async function (id, num) {
     const cost = getCostFromRarity(shopItems[num].rarity);
     const newAmount = await SubtractBalance.subtractBalance(id, cost, false);
     if (newAmount < 0) { // too expensive
