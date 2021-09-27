@@ -7,9 +7,9 @@ exports.addBalance = async function (id, amount) {
         //await DatabaseInfo.mongoClient.connect();
         const db = await DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
 
-        const col = db.collection("UserBalance");
+        const col = db.collection('UserInventory');
         const dbUser = await FindUser.findUser(id);
-        const balance = dbUser.balance;
+        const balance = await dbUser.balance;
         const newAmount = amount + balance;
 
         await col.updateOne({ user_id: id },
@@ -20,4 +20,3 @@ exports.addBalance = async function (id, amount) {
         console.log(err.stack);
     }
 }
-//addBalance().catch(console.dir);

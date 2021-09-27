@@ -16,7 +16,6 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-
     Shop.SetupShop('Base');
     DatabaseInfo.init();
     setInterval(function () {

@@ -9,7 +9,7 @@ module.exports = {
     async execute(interaction) {
         const user = interaction.options.getUser('target');
         const dbUser = await FindUser.findUser(interaction.user.id);
-        let balance = dbUser.balance;
+        let balance = await dbUser.balance;
         if (user) {
             const targettedUser = await FindUser.findUser(user.id);
             balance = targettedUser.balance;

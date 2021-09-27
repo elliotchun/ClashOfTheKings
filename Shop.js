@@ -6,8 +6,7 @@ let artifacts = [];
 let utilities = [];
 let shopItems = [];
 
-exports.SetupShop = function (...args) {
-
+SetupShop = function (...args) {
     for (let i = 0; i < args.length; args++) {
         const set = args[i];
         const weaponItems = fs.readdirSync(`./Items/${set}/Weapons`).filter(file => file.endsWith('.js'));
@@ -34,7 +33,7 @@ exports.SetupShop = function (...args) {
     }
 }
 
-exports.ResetShop = function (client, channel) {
+ResetShop = function (client, channel) {
     shopItems = [];
     let wIndex = Math.floor(Math.random(weapons.length - 1));
     let aIndex = Math.floor(Math.random(artifacts.length - 1));
@@ -48,27 +47,37 @@ exports.ResetShop = function (client, channel) {
     shopChannel.send(shopString);
 }
 
-exports.BuyShop = async function (id, num) {
+BuyShop = async function (id, num) {
     const cost = getCostFromRarity(shopItems[num].rarity);
-    const newAmount = await SubtractBalance.subtractBalance(id, cost, false);
+    const newAmount = await SubtractBalance.subtractBalance(id, cost);
     if (newAmount < 0) { // too expensive
         console.log(`[Shop]: Tried to remove ${amount} gold from ${id}'s balance; not enough funds`);
+        return false;
     }
     else { // enough balance
-        console.log(`[Shop]: Removed ${amount} gold to ${id}'s balance`);
+        console.log(`[Shop]: Removed ${amount} gold from ${id}'s balance; they now have ${newAmount}`);
+        return shopItems[num];
     }
-    
-    
 }
 
 function getCostFromRarity(rarity) {
     switch (rarity) {
-        case 'legendary':
+        case 'Legendary':
             return 100;
-        case 'rare':
+        case 'Rare':
             return 30;
-        case 'common':
+        case 'Common':
         default:
             return 10;
     }
+}
+
+module.exports = {
+    shopItems,
+    weapons,
+    utilities,
+    artifacts,
+    SetupShop,
+    ResetShop,
+    BuyShop
 }

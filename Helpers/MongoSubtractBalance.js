@@ -2,12 +2,12 @@ const Users = require('../models/Users');
 const FindUser = require('./MongoFindUser');
 const DatabaseInfo = require('../MongoInfo');
 
-exports.subtractBalance = async function (id, amount, force) {
+exports.subtractBalance = async function (id, amount, force = false) {
     try {
         //await DatabaseInfo.mongoClient.connect();
         const db = DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
 
-        const col = db.collection("UserBalance");
+        const col = db.collection('UserInventory');
         const dbUser = await FindUser.findUser(user.id);
         const balance = dbUser.balance;
         const newAmount = balance - amount;
