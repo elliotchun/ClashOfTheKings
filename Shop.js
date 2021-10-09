@@ -1,10 +1,27 @@
 const fs = require('fs');
 const SubtractBalance = require('./Helpers/MongoSubtractBalance');
+const { MessageEmbed } = require('discord.js');
 
 let weapons = [];
 let artifacts = [];
 let utilities = [];
 let shopItems = [];
+
+CreateEmbed = function (shop) {
+    const shopEmbed = new MessageEmbed().setColor('#0099ff')
+        .setTitle('Clash of the Kings - Shop')
+        .setTimestamp()
+        .addFields(
+            { name: '\u200B', value: '\u200B' }, // newline
+            { name: `${shop[0]?.name}`, value: 'Some value here', inline: true },
+            { name: `${shop[1]?.name}`, value: 'Some value here', inline: true },
+            { name: `${shop[2]?.name}`, value: 'Some value here', inline: true },
+    );
+    return shopEmbed;
+}
+
+
+
 
 SetupShop = function (...args) {
     for (let i = 0; i < args.length; args++) {
@@ -34,12 +51,11 @@ SetupShop = function (...args) {
 }
 
 ResetShop = function (client, channel) {
+    let wIndex = Math.floor(Math.random() * weapons.length);
+    let aIndex = Math.floor(Math.random() * artifacts.length);
+    let uIndex = Math.floor(Math.random() * utilities.length);
     shopItems = [];
-    let wIndex = Math.floor(Math.random(weapons.length - 1));
-    let aIndex = Math.floor(Math.random(artifacts.length - 1));
-    let uIndex = Math.floor(Math.random(utilities.length - 1));
     shopItems.push(weapons[wIndex], artifacts[aIndex], utilities[uIndex]);
-    console.log(shopItems);
     
     const shopChannel = client.channels.cache.get(channel);
     let shopString = `New items are in the shop:\n${shopItems[0].name}, ${shopItems[1].name}, ${shopItems[2].name}`;
@@ -48,15 +64,20 @@ ResetShop = function (client, channel) {
 }
 
 BuyShop = async function (id, num) {
-    const cost = getCostFromRarity(shopItems[num].rarity);
-    const newAmount = await SubtractBalance.subtractBalance(id, cost);
-    if (newAmount < 0) { // too expensive
-        console.log(`[Shop]: Tried to remove ${amount} gold from ${id}'s balance; not enough funds`);
-        return false;
+    try {
+        const cost = getCostFromRarity(shopItems[num].rarity);
+        const newAmount = await SubtractBalance.subtractBalance(id, cost);
+        if (newAmount && newAmount < 0) { // too expensive
+            console.log(`[Shop]: Tried to remove ${amount} gold from ${id}'s balance; not enough funds`);
+            return false;
+        }
+        else { // enough balance
+            console.log(`[Shop]: Removed ${amount} gold from ${id}'s balance; they now have ${newAmount}`);
+            return shopItems[num];
+        }
     }
-    else { // enough balance
-        console.log(`[Shop]: Removed ${amount} gold from ${id}'s balance; they now have ${newAmount}`);
-        return shopItems[num];
+    catch (err) {
+        console.log(err);
     }
 }
 
@@ -73,6 +94,7 @@ function getCostFromRarity(rarity) {
 }
 
 module.exports = {
+    CreateEmbed,
     shopItems,
     weapons,
     utilities,

@@ -17,6 +17,7 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     Shop.SetupShop('Base');
+    Shop.ResetShop(client, shopChannel);
     DatabaseInfo.init();
     setInterval(function () {
         let currentTime = new Date();

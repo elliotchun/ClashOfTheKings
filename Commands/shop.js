@@ -10,8 +10,12 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('buy')
-                .setDescription('Buy an item from the shop')
-                .addStringOption(option => option.setName('item').setDescription('The name of the item to buy.'))),
+                .setDescription('Buy an item from the shop.')
+                .addStringOption(option => option.setName('item').setDescription('The name of the item to buy (Case Sensitive).')))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('gui')
+                .setDescription('Display the shop GUI.')),
     async execute(interaction) {
         const userid = interaction.user.id;
         if (interaction.options.getSubcommand() === 'buy') {
@@ -33,6 +37,13 @@ module.exports = {
                     ephemeral: true,
                 });
             }
+        }
+        if (interaction.options.getSubcommand() === 'gui') {
+            
+            return interaction.reply({
+                embeds: [ Shop.CreateEmbed(Shop.shopItems) ],
+                ephemeral: true,
+            });
         }
         return interaction.reply({
             content: `Current shop items:\n -${Shop.shopItems[0]}\n -${Shop.shopItems[1]}\n -${Shop.shopItems[2]}`,
