@@ -1,6 +1,7 @@
 class Item {
-    constructor(name, type, rarity, tag, effects) {
+    constructor(name, type, rarity, tag) {
         this.name = this.name;
+        this.description = '';
         this.type = null;
         this.rarity = this.rarity;
         this.tag = this.tag;

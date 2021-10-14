@@ -39,15 +39,14 @@ module.exports = {
             }
         }
         if (interaction.options.getSubcommand() === 'gui') {
-            
             return interaction.reply({
-                embeds: [ Shop.CreateEmbed(Shop.shopItems) ],
-                ephemeral: true,
+                embeds: [ Shop.CreateEmbed() ],
+                //ephemeral: true,
             });
         }
         return interaction.reply({
-            content: `Current shop items:\n -${Shop.shopItems[0]}\n -${Shop.shopItems[1]}\n -${Shop.shopItems[2]}`,
-            ephemeral: true,
+            content: `Current shop items:\n -${Shop.getShopItem[0]}\n -${Shop.getShopItem[1]}\n -${Shop.getShopItem[2]}`,
+            //ephemeral: true,
         });
     },
 };

@@ -7,21 +7,18 @@ let artifacts = [];
 let utilities = [];
 let shopItems = [];
 
-CreateEmbed = function (shop) {
+CreateEmbed = function () {
     const shopEmbed = new MessageEmbed().setColor('#0099ff')
         .setTitle('Clash of the Kings - Shop')
         .setTimestamp()
         .addFields(
+            { name: `${shopItems[0]?.name}`, value: `${shopItems[0]?.description}`, inline: true },
+            { name: `${shopItems[1]?.name}`, value: `${shopItems[1]?.description}`, inline: true },
+            { name: `${shopItems[2]?.name}`, value: `${shopItems[2]?.description}`, inline: true },
             { name: '\u200B', value: '\u200B' }, // newline
-            { name: `${shop[0]?.name}`, value: 'Some value here', inline: true },
-            { name: `${shop[1]?.name}`, value: 'Some value here', inline: true },
-            { name: `${shop[2]?.name}`, value: 'Some value here', inline: true },
     );
     return shopEmbed;
 }
-
-
-
 
 SetupShop = function (...args) {
     for (let i = 0; i < args.length; args++) {
@@ -81,6 +78,34 @@ BuyShop = async function (id, num) {
     }
 }
 
+getWeapon = function () {
+    return weapons;
+}
+getWeapon = function (index) {
+    return weapons[index];
+}
+
+getUtility = function () {
+    return utilities;
+}
+getUtility = function (index) {
+    return utilities[index];
+}
+
+getArtifact = function () {
+    return artifacts;
+}
+getArtifact = function (index) {
+    return artifacts[index];
+}
+
+getShopItem = function () {
+    return shopItems;
+}
+getShopItem = function (index) {
+    return shopItems[index];
+}
+
 function getCostFromRarity(rarity) {
     switch (rarity) {
         case 'Legendary':
@@ -95,11 +120,11 @@ function getCostFromRarity(rarity) {
 
 module.exports = {
     CreateEmbed,
-    shopItems,
-    weapons,
-    utilities,
-    artifacts,
     SetupShop,
     ResetShop,
-    BuyShop
+    BuyShop,
+    getWeapon,
+    getUtility,
+    getArtifact,
+    getShopItem,
 }

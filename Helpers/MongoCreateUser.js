@@ -1,7 +1,7 @@
 const Users = require('../models/Users');
 const DatabaseInfo = require('../MongoInfo');
 const ExampleArtifact = require('../Items/Base/Artifacts/ExampleArtifact');
-const ExampleWeapon = require('../Items/Base/Weapons/Example');
+const ExampleWeapon = require('../Items/Base/Weapons/ExampleWeapon');
 const ExampleUtility = require('../Items/Base/Utilities/ExampleUtility');
 
 exports.createUser = async function (id) {

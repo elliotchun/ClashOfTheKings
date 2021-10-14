@@ -19,7 +19,7 @@ module.exports = {
             AddItem.addItem(userid, item);
             return interaction.reply({
                 content: `Successful purchase! You now own ${itemid}`,
-                ephemeral: true,
+                //ephemeral: true,
             });
         }
         else {
