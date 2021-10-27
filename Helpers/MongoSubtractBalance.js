@@ -8,7 +8,7 @@ exports.subtractBalance = async function (id, amount, force = false) {
         const db = DatabaseInfo.mongoClient.db(DatabaseInfo.dbName);
 
         const col = db.collection('UserInventory');
-        const dbUser = await FindUser.findUser(user.id);
+        const dbUser = await FindUser.findUser(id);
         const balance = dbUser.balance;
         const newAmount = balance - amount;
         if (newAmount < 0) {

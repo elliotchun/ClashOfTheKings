@@ -1,7 +1,9 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Users = require('../models/Users');
 const AddBalance = require('../Helpers/MongoAddBalance');
+const AddItem = require('../Helpers/MongoAddItem');
 const Shop = require('../Shop');
+const Helpers = require('../Helpers/JSHelpers');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,7 +13,7 @@ module.exports = {
             subcommand
                 .setName('buy')
                 .setDescription('Buy an item from the shop.')
-                .addStringOption(option => option.setName('item').setDescription('The name of the item to buy (Case Sensitive).')))
+                .addStringOption(option => option.setName('item').setDescription('The type of item to purchase from the shop. (Weapon/Utility/Artifact)')))
         .addSubcommand(subcommand =>
             subcommand
                 .setName('gui')
@@ -20,14 +22,14 @@ module.exports = {
         const userid = interaction.user.id;
         if (interaction.options.getSubcommand() === 'buy') {
             const itemid = interaction.options.getString('item');
-            const itemindex = Helpers.searchStringInArray(itemid, Shop.shopItems);
+            const itemindex = Helpers.itemTypeToShopID(itemType, Shop.getShopItem());
             const item = Shop.BuyShop(userid, itemindex);
             if (item) {
                 console.log(`[Buy]: Successful purchase of ${itemid}`);
                 AddItem.addItem(userid, item);
                 return interaction.reply({
                     content: `Successful purchase! You now own ${itemid}`,
-                    ephemeral: true,
+                    //ephemeral: true,
                 });
             }
             else {

@@ -65,11 +65,11 @@ BuyShop = async function (id, num) {
         const cost = getCostFromRarity(shopItems[num].rarity);
         const newAmount = await SubtractBalance.subtractBalance(id, cost);
         if (newAmount && newAmount < 0) { // too expensive
-            console.log(`[Shop]: Tried to remove ${amount} gold from ${id}'s balance; not enough funds`);
+            console.log(`[Shop]: Tried to remove ${cost} gold from ${id}'s balance; not enough funds`);
             return false;
         }
         else { // enough balance
-            console.log(`[Shop]: Removed ${amount} gold from ${id}'s balance; they now have ${newAmount}`);
+            console.log(`[Shop]: Removed ${cost} gold from ${id}'s balance; they now have ${newAmount}`);
             return shopItems[num];
         }
     }

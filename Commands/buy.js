@@ -12,7 +12,7 @@ module.exports = {
     async execute(interaction) {
         const userid = interaction.user.id;
         const itemid = interaction.options.getString('item');
-        const itemindex = Helpers.searchStringInArray(itemid, Shop.shopItems);
+        const itemindex = Helpers.searchStringInArray(itemid, Shop.getShopItem());
         const item = Shop.BuyShop(userid, itemindex);
         if (item) {
             console.log(`[Buy]: Successful purchase of ${itemid}`);

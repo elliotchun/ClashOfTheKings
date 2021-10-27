@@ -5,3 +5,14 @@ exports.searchStringInArray = function (str, strArray) {
     }
     return -1;
 }
+
+exports.itemTypeToShopID = function (itemType) {
+    switch (itemType.toLowerCase()) {
+        case 'weapon':
+            return 1;
+        case 'utility':
+            return 2;
+        case 'artifact':
+            return 3;
+    }
+}
