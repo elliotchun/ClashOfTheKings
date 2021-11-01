@@ -1,0 +1,47 @@
+db.users.insertOne()
+- Pass an object
+db.users.insertMany()
+- Pass an array of objects
+db.users.find()
+- returns all items within the database
+db.users.find().sort({field: 1/-1, field: 1/-1})
+- Sorts objects into alphabetical order
+db.users.find({field: foo}) || db.users.find({field: { $eq: foo}})
+- Finds an object in the database with the given field value, sensitive to dataType
+db.users.find({field: }, {field: 1, _id: 0})
+- Only returns the given field as an object in an array
+Complex queries: 
+- ne - not equal
+- gt - greater than
+- gte - greater than or equal to
+- lte - less than or equal to
+- lt - less than
+- in - takes an array, finds in this array
+- nin - takes an array, finds things that aren't in array
+- exists - takes a boolean, checks if field exists at all even if null
+- and - takes complex queries as an object in an array
+- or - takes complex queries as an object in an array
+- not - takes complex queries as an object in an array
+- expr - ?
+
+db.users.find({ "object.field": value })
+- Find a document by field value of an object
+db.users.countDocuments({ field: { query }})
+- Returns number of documents based on query
+db.users.updateOne({ field: foo}, { $set: { field: bar } })
+- Takes two parameters: 1. Queries to filter 2. Operator object
+Update operators:
+- set - sets value of field
+- inc - increments value by an integer
+- rename - renames a field
+- unset - removes a field
+- push - pushes a value into an array field
+- pull - removes a value from an array field
+
+db.users.updateMany({query, action})
+
+db.users.replaceOne({query, object})
+- Completely replaces an object with the second parameter
+db.users.deleteOne({query})
+db.users.deleteMany({query})
+- Completely deletes objects from the database

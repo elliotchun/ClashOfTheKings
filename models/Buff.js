@@ -1,11 +1,8 @@
 class Buff {
-    constructor(name, isPassive) {
+    constructor(name, info, isPassive) {
         this.name = name;
+        this.info = info;
         this.isPassive = isPassive;
-    }
-    
-    effect = function () {
-
     }
 }
 
@@ -14,5 +11,8 @@ class BuffInstance {
         this.Buff = Buff;
         this.target = target;
         this.duration = duration;
+    }
+    effect = function () {
+
     }
 }

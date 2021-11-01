@@ -13,6 +13,12 @@ module.exports = {
         const userid = interaction.user.id;
         const itemid = interaction.options.getString('item');
         const itemindex = Helpers.searchStringInArray(itemid, Shop.getShopItem());
+        if (itemindex < 0) {
+            return interaction.reply({
+                content: `Invalid item; purchase of ${itemid} unsuccessful`,
+                ephemeral: true,
+            })
+        }
         const item = Shop.BuyShop(userid, itemindex);
         if (item) {
             console.log(`[Buy]: Successful purchase of ${itemid}`);
