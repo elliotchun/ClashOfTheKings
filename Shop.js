@@ -2,10 +2,10 @@ const fs = require('fs');
 const SubtractBalance = require('./Helpers/MongoSubtractBalance');
 const { MessageEmbed } = require('discord.js');
 
-let weapons = [];
-let artifacts = [];
-let utilities = [];
-let shopItems = [];
+var weapons = [];
+var artifacts = [];
+var utilities = [];
+var shopItems = [];
 
 CreateEmbed = function () {
     const shopEmbed = new MessageEmbed().setColor('#0099ff')
@@ -62,7 +62,8 @@ ResetShop = function (client, channel) {
 
 BuyShop = async function (id, num) {
     try {
-        const cost = getCostFromRarity(shopItems[num].rarity);
+        if (num === -1) return false;
+        const cost = getCostFromRarity(await shopItems[num].rarity);
         const newAmount = await SubtractBalance.subtractBalance(id, cost);
         if (newAmount && newAmount < 0) { // too expensive
             console.log(`[Shop]: Tried to remove ${cost} gold from ${id}'s balance; not enough funds`);
@@ -70,7 +71,7 @@ BuyShop = async function (id, num) {
         }
         else { // enough balance
             console.log(`[Shop]: Removed ${cost} gold from ${id}'s balance; they now have ${newAmount}`);
-            return shopItems[num];
+            return await shopItems[num];
         }
     }
     catch (err) {
@@ -99,9 +100,6 @@ getArtifact = function (index) {
     return artifacts[index];
 }
 
-getShopItem = function () {
-    return shopItems;
-}
 getShopItem = function (index) {
     return shopItems[index];
 }
@@ -127,4 +125,5 @@ module.exports = {
     getUtility,
     getArtifact,
     getShopItem,
+    shopItems
 }

@@ -1,7 +1,15 @@
 module.exports = {
     user_id: "",
     balance: 0,
-    weapons: [ ],
-    artifacts: [ ],
-    utilities: [ ],
+    items: {
+        weapons: {
+            
+        },
+        utilities: {
+
+        },
+        artifacts: {
+    
+        },
+    },
 };

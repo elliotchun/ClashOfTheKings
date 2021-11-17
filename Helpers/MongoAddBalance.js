@@ -9,12 +9,10 @@ exports.addBalance = async function (id, amount) {
 
         const col = db.collection('UserInventory');
         const dbUser = await FindUser.findUser(id);
-        const balance = await dbUser.balance;
-        const newAmount = amount + balance;
-
         await col.updateOne({ user_id: id },
-            { $set: { balance: newAmount } });
-        return newAmount;
+            { $inc: { balance: amount } });
+        let newbal = await dbUser.balance;
+        return newbal;
     }
     catch (err) {
         console.log(err.stack);

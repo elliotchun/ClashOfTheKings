@@ -22,7 +22,8 @@ module.exports = {
         const userid = interaction.user.id;
         if (interaction.options.getSubcommand() === 'buy') {
             const itemid = interaction.options.getString('item');
-            const itemindex = Helpers.itemTypeToShopID(itemid, Shop.getShopItem());
+            console.log(Shop.getShopItem());
+            const itemindex = Helpers.searchStringInArray(itemid, Shop.shopItems);
             if (itemindex < 0) {
                 return interaction.reply({
                     content: `Invalid item; purchase of ${itemid} unsuccessful`,
@@ -46,6 +47,7 @@ module.exports = {
                 });
             }
         }
+
         if (interaction.options.getSubcommand() === 'gui') {
             return interaction.reply({
                 embeds: [ Shop.CreateEmbed() ],

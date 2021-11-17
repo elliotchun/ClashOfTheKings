@@ -14,9 +14,17 @@ exports.createUser = async function (id) {
         let userDocument = Users;
         userDocument.user_id = id;
         userDocument.balance = 0;
-        userDocument.weapons = [ExampleWeapon];
-        userDocument.artifacts = [ExampleArtifact];
-        userDocument.utilities = [ExampleUtility];
+        userDocument.items = {
+            weapons : {
+                ExampleWeapon,
+            },
+            utilities : {
+                
+            },
+            artifacts : {
+                
+            }
+        };
         // Insert a single document, wait for promise so we can read it back
         const p = await col.insertOne(userDocument);
     }
